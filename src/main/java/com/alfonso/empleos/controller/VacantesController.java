@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,10 @@ public class VacantesController {
 	IVacantesService serviceVacantes;
 	
 	@Autowired
+	@Qualifier("categoriaServiceImp")
 	ICategoriasService serviceCategorias;
 	
+	//Inyecta el valor de application.properties
 	@Value("${empleaosApp.ruta.imagenes}")
 	private String ruta;
 	
@@ -46,7 +49,7 @@ public class VacantesController {
 	}
 
 	@RequestMapping("/detalle/{id}")
-	public String verDetalle(@PathVariable("id") int idVacante, Model modelo) {
+	public String verDetalle(@PathVariable("id") Long idVacante, Model modelo) {
 		Vacante vacante = serviceVacantes.buscarPorId(idVacante);
 		System.out.println("Id De La Vacante " + vacante);
 		modelo.addAttribute("vacante", vacante);

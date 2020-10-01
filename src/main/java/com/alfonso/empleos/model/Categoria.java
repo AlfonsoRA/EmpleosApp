@@ -1,20 +1,31 @@
 package com.alfonso.empleos.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="categorias")
 public class Categoria {
 
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String nombre;
 	private String descripcion;
+	private String observaciones;
 	
 	public Categoria() {
 		super();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -34,9 +45,18 @@ public class Categoria {
 		this.descripcion = descripcion;
 	}
 
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
 	@Override
 	public String toString() {
-		return "Categorias [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return "Categoria [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", observaciones="
+				+ observaciones + "]";
 	}
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alfonso.empleos.model.Vacante;
@@ -22,19 +23,8 @@ public class HomeController {
 	IVacantesService serviceVacantes;
 	
 	@GetMapping("/")
-	public String mostrarHome(Model modelo) {
-//		modelo.addAttribute("mensaje", "Bienvenidos a empleos App");
-//		modelo.addAttribute("fecha", new Date() );
-//				String nombre = "Auxiliar de contabilidad";
-//				Date fechaPub = new Date();
-//				double salario = 9000.0;
-//				boolean vigente = true;
-//				modelo.addAttribute("nombre", nombre); 
-//				modelo.addAttribute("fecha", fechaPub);
-//				modelo.addAttribute("salario", salario);
-//				modelo.addAttribute("vigente", vigente);
-		
-	List<Vacante> vacantes = serviceVacantes.buscarTodas();
+	public String mostrarHome(Model modelo) {		
+	List<Vacante> vacantes = serviceVacantes.buscarXDestacado("Aprobada",1);
 	modelo.addAttribute("vacantes", vacantes);
 		return "home";
 	}
@@ -70,5 +60,10 @@ public class HomeController {
 		modelo.addAttribute("vacantes", listaVac);
 		return "tabla";
 	}	
+	
+	@ModelAttribute
+	public void vacanteGenerico(Model modelo) {
+		modelo.addAttribute("vacante", serviceVacantes.buscarXDestacado("Aprobada", 1));
+	}
 	
 }

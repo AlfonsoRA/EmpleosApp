@@ -3,46 +3,35 @@ package com.alfonso.empleos.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.alfonso.empleos.model.Categoria;
+import com.alfonso.empleos.repository.categoriaRepository;
 
 @Service
+//Anotacion Primary sirve para dar prioridad a esta implementacion sobre la interface
+//@Primary
 public class CategoriaServiceImp implements ICategoriasService {
 	
-	private List<Categoria> listaCateg= null;
-	
-	public CategoriaServiceImp() {
-		super();
-		listaCateg = new LinkedList<Categoria>();
-		Categoria categoria1 = new Categoria();
-		Categoria categoria2 = new Categoria();
-		Categoria categoria3 = new Categoria();	
-	}
+	@Autowired
+	categoriaRepository repoCategorias;
 
 	@Override
 	public void guardar(Categoria categoria) {
-		listaCateg.add(categoria);
-		
+		repoCategorias.save(categoria);		
 	}
 
 	@Override
 	public List<Categoria> buscarTodas() {
-		
-		
-		return listaCateg;
+		return repoCategorias.findAll();
 	}
 
 	@Override
-	public Categoria buscarPorId(Integer id) {
-		for (Categoria categoria : listaCateg) {
-			if (categoria.getId() == id) {
-				return categoria;
-			}
-			
-		}
-
-		return null;
+	public Categoria buscarPorId(Long id) {
+		return repoCategorias.findById(id).orElse(null);
 	}
 
 }

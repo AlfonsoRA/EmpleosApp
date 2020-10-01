@@ -2,17 +2,33 @@ package com.alfonso.empleos.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="vacantes")
 public class Vacante {
 
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String nombre;
 	private String descripcion;
 	private Date fecha;
 	private Integer salario;
-	private Integer destacada;
+	private Integer destacado;
 	private String imagen="no-image.png";
 	private String estatus;
-	private String detalle;
+	private String detalles;
+//	@Transient
+	@OneToOne
+	@JoinColumn(name="idCategoria")
 	private Categoria categoria;
 	
 	public Categoria getCategoria() {
@@ -27,11 +43,11 @@ public class Vacante {
 		super();
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -61,11 +77,11 @@ public class Vacante {
 
 	
 	public Integer getDestacada() {
-		return destacada;
+		return destacado;
 	}
 
-	public void setDestacada(Integer destacada) {
-		this.destacada = destacada;
+	public void setDestacada(Integer destacado) {
+		this.destacado = destacado;
 	}
 
 
@@ -97,19 +113,19 @@ public class Vacante {
 		this.estatus = estatus;
 	}
 
-	public String getDetalle() {
-		return detalle;
+	public String getDetalles() {
+		return detalles;
 	}
 
-	public void setDetalle(String detalle) {
-		this.detalle = detalle;
+	public void setDetalles(String detalles) {
+		this.detalles = detalles;
 	}
 
 	@Override
 	public String toString() {
 		return "Vacante [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha
-				+ ", salario=" + salario + ", destacada=" + destacada + ", imagen=" + imagen + ", estatus=" + estatus
-				+ ", detalle=" + detalle + ", categoria=" + categoria + "]";
+				+ ", salario=" + salario + ", destacada=" + destacado + ", imagen=" + imagen + ", estatus=" + estatus
+				+ ", detalles=" + detalles + ", categoria=" + categoria + "]";
 	}	
 	
 }

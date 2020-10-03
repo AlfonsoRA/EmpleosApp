@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,11 +58,11 @@ public class VacantesController {
 		return "vacantes/detalle";
 	}
 
-	@RequestMapping("/delete")
-	public String eliminar(@RequestParam("id") int idVacante, Model modelo) {
-		System.out.println("Vacante eliminada con el id " + idVacante);
-		modelo.addAttribute("idVacante", idVacante);
-		return "vacante";
+	@RequestMapping("/delete/{id}")
+	public String eliminar(@PathVariable("id") Long idVacante, Model modelo, RedirectAttributes redirect) {
+		serviceVacantes.eliminar(idVacante);
+		redirect.addFlashAttribute("msg", "La vacante fue eliminada");
+		return "redirect:/vacantes/index";
 	}
 
 //	@PostMapping("/save")
@@ -102,11 +104,23 @@ public class VacantesController {
 	return "redirect:/vacantes/index";
 	}
 	
-	@RequestMapping("/index")
+	@GetMapping("/index")
 	public String mostrarIndex(Model modelo) {
 		List<Vacante> vacante= serviceVacantes.buscarTodas();
 		modelo.addAttribute("vacantes", vacante);
 		return"vacantes/listVacante";
+	}
+	
+	@GetMapping("/edit/{id}")
+	public String editar(@PathVariable("id") Long id, Model modelo) {
+		Vacante vacante = serviceVacantes.buscarPorId(id);
+		modelo.addAttribute("vacante", vacante);
+		return "/vacantes/formVacante";
+	}
+	
+	@ModelAttribute
+	public void setGenerico(Model modelo) {
+		modelo.addAttribute("categorias", serviceCategorias.buscarTodas());
 	}
 	
 	

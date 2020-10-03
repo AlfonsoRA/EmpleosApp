@@ -37,4 +37,9 @@ public class VacanteServiceImp implements IVacantesService{
 		return repoVacante.findByEstatusAndDestacadoOrderByIdDesc(estatus, destacado).orElse(null);
 	}
 
+	@Override
+	public void eliminar(Long idVacante) {
+		repoVacante.deleteById(idVacante);
+	}
+
 }

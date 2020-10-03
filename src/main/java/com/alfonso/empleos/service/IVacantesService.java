@@ -10,4 +10,5 @@ public interface IVacantesService {
 	void guardar(Vacante vacante);
 	public Vacante buscarPorId(Long id);
 	List<Vacante> buscarXDestacado(String status, int destacado);
+	void eliminar(Long idVacante);
 }

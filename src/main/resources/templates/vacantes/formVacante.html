@@ -29,6 +29,7 @@
           <h4 class="card-header"><strong>Datos de la oferta de trabajo</strong></h4>              
           <div class="card-body">
            <form th:action="@{/vacantes/save}" method="post" th:object="${vacante}" enctype="multiPart/form-data">
+           		<input type="hidden" th:field="*{id}">
            		<div th:if="${#fields.hasErrors('*')}" class="alert-danger" role="alert">
            			Por favor corrija los siguientes errores:
            			<ul>
@@ -107,12 +108,12 @@
                 <div class="col-md-9"> 
                   <div class="form-group">
                     <label for="detalles"><strong>Detalles</strong></label>          
-                    <textarea class="form-control" name="detalle" th:field="*{detalle}" id="detalles" rows="7"></textarea>
+                    <textarea class="form-control" name="detalles" th:field="*{detalles}" id="detalles" rows="7"></textarea>
                   </div> 
                 </div> 
                 <div class="col-md-3">
                   <label for="imagen">Imagen/Logo</label>
-                  <img class="rounded mx-auto d-block" th:src="@{/images/logo4.png}" alt="Generic placeholder image" width="200" height="200">            
+                  <img class="rounded mx-auto d-block" th:src="@{/logos/logo4.png}" alt="Generic placeholder image" width="200" height="200">            
                 </div>
               </div> 
               <button type="submit" class="btn btn-primary">Guardar</button>  
